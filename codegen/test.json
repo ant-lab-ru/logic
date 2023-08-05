@@ -1,0 +1,36 @@
+{
+  "interfaces":[
+    {
+      "name": "version",
+      "fields": [
+        "ro char bootloader[12]",
+        "ro uint32_t test_field"
+      ],
+      "commands": [
+        "void burn_version()"
+      ]
+    },
+    {
+      "name": "nandfs",
+      "fields": [
+        "ro uint16_t total_files",
+        "ro char next_name[16]",
+        "wr uint16_t erase_nand"
+      ]
+    },
+    {
+      "name": "fs",
+      "fields": [
+        "ro uint16_t total_files",
+        "ro char next_name[16]",
+        "wr uint16_t erase_nand"
+      ]
+    },
+    {
+      "name": "memfs",
+      "fields": [
+        "wo int32_t value"
+      ]
+    }
+  ]
+}
