@@ -1,4 +1,5 @@
 {
+  "name": "modem",
   "interfaces":[
     {
       "name": "version",
@@ -15,7 +16,7 @@
       "fields": [
         "ro uint16_t total_files",
         "ro char next_name[16]",
-        "wr uint16_t erase_nand"
+        "rw uint16_t erase_nand"
       ]
     },
     {
@@ -23,7 +24,7 @@
       "fields": [
         "ro uint16_t total_files",
         "ro char next_name[16]",
-        "wr uint16_t erase_nand"
+        "rw uint16_t erase_nand"
       ]
     },
     {
