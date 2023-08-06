@@ -15,6 +15,15 @@ base_types = [
     "double"
 ]
 
+def get_field_split(field):
+    field_split = {}
+    field_words = field.split()
+    field_split['mode'] = field_words[0]
+    field_split['type'] = field_words[1]
+    field_split['name'] = field_words[2].split('[', 1)[0]
+    return field_split
+    
+
 def check_field_name(name_string):
     if name_string.count('[')==1 and name_string.count(']')==1:
         left = name_string.index('[')
@@ -47,17 +56,17 @@ def get_fields_string(fields, name):
 def get_accessor_prototypes(node_name, fields, name):
     accessor_prototypes_string = "// "+name+"\n"
     for field in fields:
-        field_words = field.split()
-        accessor_prototypes_string += "uint8_t "+node_name+"_"+name+"_"+field_words[2]+"_write("+node_name+"_node_t* self);\n"
-        accessor_prototypes_string += "uint8_t "+node_name+"_"+name+"_"+field_words[2]+"_read("+node_name+"_node_t* self);\n\n"
+        field_split = get_field_split(field)
+        accessor_prototypes_string += "uint8_t "+node_name+"_write_"+name+"_"+field_split.get('name')+"("+node_name+"_node_t* self);\n"
+        accessor_prototypes_string += "uint8_t "+node_name+"_read_"+name+"_"+field_split.get('name')+"("+node_name+"_node_t* self);\n\n"
     return accessor_prototypes_string
 
 def get_accessor_definitions(node_name, fields, name):
     accessor_definitions_string = "// "+name+"\n"
     for field in fields:
-        field_words = field.split()
-        accessor_definitions_string += "__weak uint8_t "+node_name+"_"+name+"_"+field_words[2]+"_write("+node_name+"_node_t* self) {return 0;}\n"
-        accessor_definitions_string += "__weak uint8_t "+node_name+"_"+name+"_"+field_words[2]+"_read("+node_name+"_node_t* self) {return 0;}\n\n"
+        field_split = get_field_split(field)
+        accessor_definitions_string += "__weak uint8_t "+node_name+"_write_"+name+"_"+field_split.get('name')+"("+node_name+"_node_t* self) {return 0;}\n"
+        accessor_definitions_string += "__weak uint8_t "+node_name+"_read_"+name+"_"+field_split.get('name')+"("+node_name+"_node_t* self) {return 0;}\n\n"
     return accessor_definitions_string
 
 class DescParser:
